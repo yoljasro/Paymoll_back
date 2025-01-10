@@ -34,18 +34,6 @@ const io = new Server(server, {
   }
 });
 
-// // Click API ma'lumotlari
-// const MERCHANT_ID = '27487'; // Sizning merchant ID
-// const SERVICE_ID = '37711'; // Sizning service ID
-// const MERCHANT_USER_ID = '46815'; // Sizning merchant user ID
-// const SECRET_KEY = 'isJihg1thilU'; // Sizning secret key\
-
-
-
-
-
-//controllers 
-// const { createOrder, getAllOrders, getOrderById, updateOrderStatus, updateOrder, deleteOrder } = require("./controllers/orders.controller");
 
 app.use(cors());
 
@@ -70,11 +58,15 @@ const {
   updateProduct,
   deleteProduct
 } = require('./controllers/product.controller');
+const {
+  createOrder,
+  getOrders,
+  getOrderById,
+  updateOrder,
+  deleteOrder,
+} = require("./controllers/order.controller")
 const authMiddleware = require('./middleware/auth.middleware'); // Authentication middleware
 
-
-
-// Click - Invoice yaratish
 
 // AdminBro va boshqa marshrutlarni o'rnatish
 const run = async () => {
@@ -100,15 +92,6 @@ const run = async () => {
     res.send("hello world. I'm JasurBek");
   });
 
-  // CRUD marshrutlar
-  //profile
-  // app.post('/profiles', createProfile);
-  // app.put('/profiles/:id', updateProfile);
-  // app.get('/profiles', getAllProfiles);
-  // app.delete('/profiles/:id', deleteProfile);
-  // app.put('/profiles/:id',  updateProfile);
-  // Socket.IO configuration
-
   app.post('/register', registerUser);
 
   // POST /api/auth/login
@@ -131,19 +114,32 @@ const run = async () => {
   // GET /api/products - Get all products
   app.get('/product', getProducts);
 
-  app.get('product/:id', getProductById);
+  app.get('/product/:id', getProductById);
 
   // PUT /api/products/:id - Update a specific product by ID
-  app.put('product/:id', updateProduct);
+  app.put('/product/:id', updateProduct);
 
   // DELETE /api/products/:id - Delete a specific product by ID
-  app.delete('product/:id', deleteProduct);
+  app.delete('/product/:id', deleteProduct);
 
+  app.post('/order', createOrder);
+
+  // Get list of all orders
+  app.get('/orders', getOrders);
+
+  // Get an order by ID
+  app.get('/order/:id', getOrderById);
+
+  // Update an order
+  app.put('/order/:id', updateOrder);
+
+  // Delete an order
+  app.delete('/order/:id', deleteOrder);
 
 
 
   io.on('connection', (socket) => {
-    z``
+
     console.log('A user connected:', socket.id);
 
     // Emit a message when a new order is created    
